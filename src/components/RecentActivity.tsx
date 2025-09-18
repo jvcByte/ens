@@ -1,8 +1,9 @@
 import {
-  useDAOEvents,
+  useNameServiceEvents,
   getEventDescription,
   getEventStyle,
-} from "@/hooks/useDAOEvents";
+} from "@/hooks/useENSevents";
+
 // Helper function to format relative time without date-fns
 function getRelativeTime(blockNumber: bigint): string {
   // This is a simplified approach - in a real app you'd want to fetch block timestamps
@@ -14,7 +15,7 @@ interface RecentActivityProps {
 }
 
 export function RecentActivity({ limit = 10 }: RecentActivityProps) {
-  const { data: events, isLoading, error } = useDAOEvents();
+  const { data: events, isLoading, error } = useNameServiceEvents();
 
   if (isLoading) {
     return (
@@ -83,34 +84,32 @@ export function RecentActivity({ limit = 10 }: RecentActivityProps) {
 
                   {/* Additional event-specific details */}
                   <div className="text-xs text-muted-foreground mt-1 space-y-1">
-                    {event.eventName === "ProposalCreated" && (
+                    {event.eventName === "NameRegistered" && (
                       <p>
-                        Proposal #{event.id.toString()} • Deadline:{" "}
-                        {new Date(
-                          Number(event.deadline) * 1000,
-                        ).toLocaleDateString()}
+                        Name: {event.name} • Owner:{" "}
+                        {`${event.owner.slice(0, 6)}...${event.owner.slice(-4)}`}
                       </p>
                     )}
 
-                    {event.eventName === "ProposalFulfilled" && (
+                    {event.eventName === "NameTransferred" && (
                       <p>
-                        Proposal #{event.id.toString()} • Amount:{" "}
-                        {(Number(event.amount) / 1e18).toFixed(4)} ETH •
-                        Recipient:{" "}
-                        {`${event.recipient.slice(0, 6)}...${event.recipient.slice(-4)}`}
+                        Name: {event.name} • From:{" "}
+                        {`${event.oldOwner.slice(0, 6)}...${event.oldOwner.slice(-4)}`}{" "}
+                        → To:{" "}
+                        {`${event.newOwner.slice(0, 6)}...${event.newOwner.slice(-4)}`}
                       </p>
                     )}
 
-                    {event.eventName === "Voted" && (
+                    {event.eventName === "NameUpdated" && (
                       <p>
-                        Proposal #{event.id.toString()} • Voter:{" "}
-                        {`${event.voter.slice(0, 6)}...${event.voter.slice(-4)}`}
-                        {event.comment && ` • "${event.comment}"`}
+                        Name: {event.name} • New Address:{" "}
+                        {`${event.newAddress.slice(0, 6)}...${event.newAddress.slice(-4)}`}{" "}
+                        • New Image: {event.newImageHash.slice(0, 10)}...
                       </p>
                     )}
 
                     <p>
-                      Block #{event.blockNumber.toString()} •
+                      Block #{event.blockNumber.toString()} •{" "}
                       <a
                         href={`https://etherscan.io/tx/${event.transactionHash}`}
                         target="_blank"

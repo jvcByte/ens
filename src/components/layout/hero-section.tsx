@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
+import { RecentActivity } from "../RecentActivity";
 
 export default function HeroSection() {
   return (
@@ -45,6 +46,10 @@ export default function HeroSection() {
                 >
                   Check Ava ilability
                 </Button>
+              </div>
+              <div className="text-start rounded-3xl border bg-card p-6 mt-5 shadow-lg">
+                <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+                <RecentActivity limit={5} />
               </div>
             </div>
           </div>
