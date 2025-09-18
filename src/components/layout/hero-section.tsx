@@ -13,7 +13,7 @@ import { Hash } from "lucide-react";
 export default function HeroSection() {
   const [searchName, setSearchName] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
-  const { chainId, chain } = useAccount();
+  const { chainId, chain, address } = useAccount();
 
   const { data, isError, isLoading, refetch } = useReadContract({
     ...contracts.ENS,
@@ -40,7 +40,7 @@ export default function HeroSection() {
   const nameExists = data && data[4] === true;
   const nameAvailable = hasSearched && data && data[4] === false;
 
-  if (chainId !== CHAIN_IDS.CELO_ALFAJORES) {
+  if (address && chainId !== CHAIN_IDS.CELO_ALFAJORES) {
     return (
       <main className="">
         <section className="bg-linear-to-b to-muted from-background min-h-screen flex items-center">
