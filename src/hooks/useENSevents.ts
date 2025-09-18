@@ -8,7 +8,7 @@ export interface NameServiceEventBase {
   blockNumber: bigint;
   transactionHash: `0x${string}`;
   logIndex: number;
-  timestamp?: number;
+  timestamp: bigint; // Add timestamp to the base interface
 }
 
 export interface NameRegisteredEventData extends NameServiceEventBase {
@@ -69,7 +69,30 @@ export function useNameServiceEvents() {
             }),
           ]);
 
-        // Transform and combine all events
+        // Get unique block numbers for batch fetching timestamps
+        const allLogs = [
+          ...nameRegisteredLogs,
+          ...nameTransferredLogs,
+          ...nameUpdatedLogs,
+        ];
+        const uniqueBlockNumbers = [
+          ...new Set(allLogs.map((log) => log.blockNumber)),
+        ];
+
+        // Batch fetch all block timestamps
+        const blocks = await Promise.all(
+          uniqueBlockNumbers.map((blockNumber) =>
+            publicClient.getBlock({ blockNumber }),
+          ),
+        );
+
+        // Create a map of block number to timestamp
+        const blockTimestamps = new Map<bigint, bigint>();
+        blocks.forEach((block) => {
+          blockTimestamps.set(block.number!, block.timestamp);
+        });
+
+        // Transform and combine all events with timestamps
         const allEvents: NameServiceEventData[] = [
           // Name Registered Events
           ...nameRegisteredLogs.map(
@@ -81,6 +104,7 @@ export function useNameServiceEvents() {
               blockNumber: log.blockNumber,
               transactionHash: log.transactionHash,
               logIndex: log.logIndex,
+              timestamp: blockTimestamps.get(log.blockNumber) || 0n,
             }),
           ),
 
@@ -94,6 +118,7 @@ export function useNameServiceEvents() {
               blockNumber: log.blockNumber,
               transactionHash: log.transactionHash,
               logIndex: log.logIndex,
+              timestamp: blockTimestamps.get(log.blockNumber) || 0n,
             }),
           ),
 
@@ -107,15 +132,17 @@ export function useNameServiceEvents() {
               blockNumber: log.blockNumber,
               transactionHash: log.transactionHash,
               logIndex: log.logIndex,
+              timestamp: blockTimestamps.get(log.blockNumber) || 0n,
             }),
           ),
         ];
 
-        // Sort by block number and log index (most recent first)
+        // Sort by timestamp (most recent first)
         return allEvents.sort((a, b) => {
-          if (a.blockNumber !== b.blockNumber) {
-            return Number(b.blockNumber - a.blockNumber);
+          if (a.timestamp !== b.timestamp) {
+            return Number(b.timestamp - a.timestamp);
           }
+          // If same timestamp, sort by log index
           return b.logIndex - a.logIndex;
         });
       } catch (error) {
@@ -133,11 +160,11 @@ export function useNameServiceEvents() {
 export function getEventDescription(event: NameServiceEventData): string {
   switch (event.eventName) {
     case "NameRegistered":
-      return `New name registered: ${event.name} (owner: ${event.owner})`;
+      return `New name registered: ${event.name}`;
     case "NameTransferred":
-      return `Name ${event.name} transferred from ${event.oldOwner} to ${event.newOwner}`;
+      return `Name ${event.name} transferred`;
     case "NameUpdated":
-      return `Name ${event.name} updated → Address: ${event.newAddress}, Image: ${event.newImageHash}`;
+      return `Name ${event.name} updated`;
     default:
       return "Unknown event";
   }

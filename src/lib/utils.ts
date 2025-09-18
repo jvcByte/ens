@@ -28,11 +28,38 @@ export function generateColorFromAddress(address?: string): string {
 }
 
 export function truncateAddress(
-  address: `0x${string}` | undefined,
+  address: `0x${string}` | string | undefined,
   chars = 4,
 ): string {
   if (!address) return "";
   return `${address.substring(0, chars + 2)}...${address.substring(
     address.length - chars,
   )}`;
+}
+
+// Helper function to format relative time without date-fns
+export function getAbsoluteTime(blockTimestamp: bigint): string {
+  const timestamp = Number(blockTimestamp) * 1000;
+  return new Date(timestamp).toLocaleString();
+}
+
+export function formatRelativeTime(blockTimestamp: bigint): string {
+  // Convert block timestamp (seconds) to milliseconds
+  const timestamp = Number(blockTimestamp) * 1000;
+  const now = Date.now();
+  const diff = now - timestamp;
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (seconds < 60) return `${seconds}s ago`;
+  if (minutes < 60) return `${minutes}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days < 30) return `${days}d ago`;
+  if (months < 12) return `${months}mo ago`;
+  return `${years}y ago`;
 }

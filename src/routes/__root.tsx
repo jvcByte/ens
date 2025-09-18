@@ -10,7 +10,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <SearchProvider>
-        <main className="flex w-full flex-col">
+        <main className="flex w-full flex-col bg-linear-to-b to-muted from-background min-h-screen">
           <div className="flex items-center sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"></div>
           <div>
             <Outlet />

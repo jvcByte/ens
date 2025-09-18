@@ -5,8 +5,8 @@ import React from "react";
 import { ThemeSwitcher } from "./theme-switcher";
 import { WalletConnectionButton } from "@/components/wallet/wallet-connection-button";
 const menuItems = [
+  { name: "Activities", to: "/activities" },
   { name: "Account Abstraction", to: "#link" },
-  { name: "Join", to: "#link" },
   { name: "About", to: "#link" },
 ];
 
