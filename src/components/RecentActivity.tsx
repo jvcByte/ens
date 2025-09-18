@@ -3,6 +3,8 @@ import {
   getEventDescription,
   getEventStyle,
 } from "@/hooks/useENSevents";
+import { useAccount } from "wagmi";
+import { CHAIN_IDS } from "@/lib/chain-utils";
 
 // Helper function to format relative time without date-fns
 function getRelativeTime(blockNumber: bigint): string {
@@ -16,6 +18,27 @@ interface RecentActivityProps {
 
 export function RecentActivity({ limit = 10 }: RecentActivityProps) {
   const { data: events, isLoading, error } = useNameServiceEvents();
+  const { address, chainId } = useAccount();
+
+  if (!address) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">
+          Connect your wallet to see recent activities.
+        </p>
+      </div>
+    );
+  }
+
+  if (chainId !== CHAIN_IDS.CELO_ALFAJORES) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">
+          Please switch to the Celo Alfajores network to see recent activities.
+        </p>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -86,7 +109,7 @@ export function RecentActivity({ limit = 10 }: RecentActivityProps) {
                   <div className="text-xs text-muted-foreground mt-1 space-y-1">
                     {event.eventName === "NameRegistered" && (
                       <p>
-                        Name: {event.name} • Owner:{" "}
+                        Name: {event.name} • Registrar:{" "}
                         {`${event.owner.slice(0, 6)}...${event.owner.slice(-4)}`}
                       </p>
                     )}

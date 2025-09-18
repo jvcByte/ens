@@ -23,7 +23,6 @@ export const formatChainName = (chainName: string): string => {
     .replace(" Network", "");
 };
 
-// Popular chain IDs for reference
 export const CHAIN_IDS = {
   ETHEREUM_MAINNET: 1,
   SEPOLIA: 11155111,

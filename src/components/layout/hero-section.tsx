@@ -15,20 +15,6 @@ export default function HeroSection() {
               <p className="text-xl text-muted-foreground mt-4 mb-8 max-w-2xl mx-auto">
                 Register your .eth domain and own your digital identity forever
               </p>
-              <div className="flex items-center justify-center gap-6 mt-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <span>Available</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                  <span>Taken</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  <span>Not Supported</span>
-                </div>
-              </div>
               <div className="flex flex-col md:flex-row items-center justify-center gap-3 max-w-2xl mx-auto mt-8">
                 <div className="relative flex-1 w-full">
                   <Input
@@ -44,11 +30,13 @@ export default function HeroSection() {
                   size="lg"
                   className="px-8 w-full md:w-auto text-lg h-12"
                 >
-                  Check Ava ilability
+                  Check Availability
                 </Button>
               </div>
               <div className="text-start rounded-3xl border bg-card p-6 mt-5 shadow-lg">
-                <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  Recent Activities
+                </h3>
                 <RecentActivity limit={5} />
               </div>
             </div>
