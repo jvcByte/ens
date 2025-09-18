@@ -166,7 +166,8 @@ export default function HeroSection() {
                   <div className="flex items-center justify-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg shadow-lg bg-gradient-to-tl from-muted to-background">
                     <XCircle className="w-4 h-4 text-red-500" />
                     <p className="text-sm text-red-600">
-                      Error checking name availability. Please try again.
+                      Error checking name availability. Make sure your wallet is
+                      connected and try again.
                     </p>
                   </div>
                 )}
