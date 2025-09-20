@@ -1,11 +1,9 @@
 import { celoAlfajores } from "viem/chains";
-import { createWalletClient, createPublicClient, custom, http } from "viem";
+import { createWalletClient, createPublicClient, custom } from "viem";
 
 export const publicClient = createPublicClient({
   chain: celoAlfajores,
-  transport: http(
-    `https://celo-alfajores.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY}`,
-  ),
+  transport: custom(window.ethereum),
 });
 
 export const walletClient = createWalletClient({
