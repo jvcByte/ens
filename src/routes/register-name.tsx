@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeroHeader } from "@/components/layout/header";
-import { ENSRegister } from "@/components/layout/register-ens";
+import { ENSRegister } from "@/components/pages/register-ens";
 
 export const Route = createFileRoute("/register-name")({
   component: Register,

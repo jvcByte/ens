@@ -132,6 +132,7 @@ export function ENSTransfer() {
             </Label>
             <Input
               id="ens-name"
+              required
               name="ens-name"
               type="text"
               // disabled

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeroHeader } from "@/components/layout/header";
-import { ENSTransfer } from "@/components/layout/transfer-ens";
+import { ENSTransfer } from "@/components/pages/transfer-ens";
 
 export const Route = createFileRoute("/transfer-name")({
   component: TransferName,
