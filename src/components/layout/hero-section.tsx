@@ -9,6 +9,8 @@ import { CheckCircle, XCircle, Search, Clock } from "lucide-react";
 import { CHAIN_IDS } from "@/lib/chain-utils";
 import { useAccount } from "wagmi";
 import { Hash } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { trimSpace } from "@/lib/utils";
 
 export default function HeroSection() {
   const [searchName, setSearchName] = useState("");
@@ -62,7 +64,7 @@ export default function HeroSection() {
                     placeholder="yourname"
                     value={searchName}
                     onChange={(e) => setSearchName(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyDown={handleKeyPress}
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
                     .eth
@@ -83,6 +85,7 @@ export default function HeroSection() {
                     "Check Availability"
                   )}
                 </Button>
+                React
               </div>
 
               {/* Results Section */}
@@ -92,8 +95,7 @@ export default function HeroSection() {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Wrong Network</h3>
                 <p className="text-muted-foreground text-center max-w-sm">
-                  Please switch to the Celo Alfajores network to view recent
-                  activities.
+                  Please switch to the Celo Alfajores network.
                 </p>
                 <Badge variant="outline" className="mt-3">
                   Current: {chainId ? ` ${chain?.name}` : "Unknown"}
@@ -185,13 +187,21 @@ export default function HeroSection() {
                       </Badge>
                     </div>
                     <h3 className="text-lg font-semibold mb-2">
-                      "{searchName}.eth" is available!
+                      "{trimSpace(searchName)}.eth" is available!
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       You can register this name and make it yours.
                     </p>
-                    <Button className="bg-[#007707] hover:bg-[#009907]/90 text-white">
-                      Register Now
+                    <Button
+                      asChild
+                      className="bg-[#007707] hover:bg-[#009907]/90 text-white"
+                    >
+                      <Link
+                        to="/register"
+                        search={{ name: trimSpace(searchName) }}
+                      >
+                        Register Now
+                      </Link>
                     </Button>
                   </div>
                 )}

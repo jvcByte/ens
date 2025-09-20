@@ -7,7 +7,7 @@ import { WalletConnectionButton } from "@/components/wallet/wallet-connection-bu
 const menuItems = [
   { name: "Activities", to: "/activities" },
   { name: "Account Abstraction", to: "#link" },
-  { name: "About", to: "#link" },
+  // { name: "Register", to: "/register" },
 ];
 
 export const HeroHeader = () => {

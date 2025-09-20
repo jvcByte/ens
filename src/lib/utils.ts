@@ -10,6 +10,10 @@ export async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+export function trimSpace(name: string): string {
+  return name.replace(/[^a-zA-Z0-9_]/g, "");
+}
+
 // Formatting helper
 export const formatNumber = (value: bigint | undefined) => {
   if (value === undefined) return "0.00";
