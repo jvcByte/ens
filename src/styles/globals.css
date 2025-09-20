@@ -186,7 +186,7 @@
 /* Success toast */
 .toast-success {
     background: linear-gradient(
-        to bottom,
+        to top,
         var(--background),
         var(--muted)
     ) !important;
@@ -194,7 +194,7 @@
     border: 1px solid var(--color-border) !important;
     border-radius: var(--radius) !important;
     padding: 0.75rem 1rem !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
     backdrop-filter: blur(10px) !important;
 }
@@ -202,7 +202,7 @@
 /* Error toast */
 .toast-error {
     background: linear-gradient(
-        to bottom,
+        to top,
         var(--background),
         var(--muted)
     ) !important;
@@ -210,7 +210,7 @@
     border: 1px solid var(--color-border) !important;
     border-radius: var(--radius) !important;
     padding: 0.75rem 1rem !important;
-    font-weight: 700 !important;
+    font-weight: 400 !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
     backdrop-filter: blur(10px) !important;
 }
@@ -218,7 +218,7 @@
 /* Loading toast */
 .toast-loading {
     background: linear-gradient(
-        to bottom,
+        to top,
         var(--background),
         var(--muted)
     ) !important;
