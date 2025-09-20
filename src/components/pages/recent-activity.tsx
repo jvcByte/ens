@@ -16,6 +16,7 @@ import {
 import {
   ExternalLink,
   User,
+  Unplug,
   ArrowRight,
   Edit,
   Clock,
@@ -110,7 +111,7 @@ export function RecentActivity({ limit = 10 }: RecentActivityProps) {
     return (
       <div className="flex flex-col items-center justify-center py-8 sm:py-16 px-4 sm:px-6">
         <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-          <User className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
+          <Unplug className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
         </div>
         <h3 className="text-base sm:text-lg font-semibold mb-2 text-center">
           Connect Your Wallet

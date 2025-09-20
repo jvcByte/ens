@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RecentActivity } from "@/components/recent-activity";
+import { RecentActivity } from "@/components/pages/recent-activity";
 import { HeroHeader } from "@/components/layout/header";
 
 export const Route = createFileRoute("/activities")({

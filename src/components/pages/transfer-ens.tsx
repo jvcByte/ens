@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { CHAIN_IDS } from "@/lib/chain-utils";
 import { truncateAddress } from "@/lib/utils";
 import contracts from "@/contracts/contracts";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Unplug } from "lucide-react";
 import toast from "react-hot-toast";
 
 export function ENSTransfer() {
@@ -113,8 +113,14 @@ export function ENSTransfer() {
 
   if (!address) {
     return (
-      <div className="text-center py-8">
-        <p className="text-sm text-muted-foreground">
+      <div className="flex flex-col items-center justify-center py-8 sm:py-16 px-4 sm:px-6">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+          <Unplug className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
+        </div>
+        <h3 className="text-base sm:text-lg font-semibold mb-2 text-center">
+          Connect Your Wallet
+        </h3>
+        <p className="text-muted-foreground text-center text-sm sm:text-base max-w-xs sm:max-w-sm">
           Please connect your wallet to Transfer ENS name.
         </p>
       </div>
