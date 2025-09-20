@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { RecentActivity } from "@/components/pages/recent-activity";
-import { HeroHeader } from "@/components/layout/header";
+import { Header } from "@/components/layout/header";
 
 export const Route = createFileRoute("/activities")({
   component: Activities,
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/activities")({
 function Activities() {
   return (
     <div className="min-h-screen bg-background">
-      <HeroHeader />
+      <Header />
 
       {/* Main content area with proper height calculation */}
       <div className=" mx-auto px-2 sm:px-4 py-4 sm:py-6 fixed top-20 left-4 right-4 bottom-4">

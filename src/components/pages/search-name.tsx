@@ -12,7 +12,7 @@ import { Hash } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { trimSpace } from "@/lib/utils";
 
-export default function HeroSection() {
+export default function ENSSearch() {
   const [searchName, setSearchName] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
   const { chainId, chain, address } = useAccount();
@@ -21,8 +21,9 @@ export default function HeroSection() {
     ...contracts.ENS,
     functionName: "nameRecords",
     args: [searchName],
+    chainId: CHAIN_IDS.CELO_ALFAJORES,
     query: {
-      enabled: false, // Don't auto-fetch, only when we trigger it
+      enabled: hasSearched && searchName.trim() !== "", // Only fetch when user searches
     },
   });
 

@@ -10,7 +10,7 @@ const menuItems = [
   { name: "Account Abstraction", to: "#link" },
 ];
 
-export const HeroHeader = () => {
+export const Header = () => {
   const [menuState, setMenuState] = React.useState(false);
 
   return (

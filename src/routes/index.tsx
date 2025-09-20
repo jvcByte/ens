@@ -1,6 +1,6 @@
-import { HeroHeader } from "@/components/layout/header";
+import { Header } from "@/components/layout/header";
 import { createFileRoute } from "@tanstack/react-router";
-import HeroSection from "@/components/layout/hero-section";
+import ENSSearch from "@/components/pages/search-name";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -9,8 +9,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="h-screen overflow-auto">
-      <HeroHeader />
-      <HeroSection />
+      <Header />
+      <ENSSearch />
     </div>
   );
 }
