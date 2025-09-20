@@ -9,6 +9,7 @@ import { CHAIN_IDS } from "@/lib/chain-utils";
 import contracts from "@/contracts/contracts";
 import { ExternalLink, Unplug } from "lucide-react";
 import toast from "react-hot-toast";
+import { celoAlfajores } from "viem/chains";
 
 type ENSRegisterProps = {
   name: string;
@@ -54,6 +55,7 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
         address: contracts.ENS.address,
         abi: contracts.ENS.abi,
         functionName: "registerName",
+        chain: celoAlfajores,
         args: [
           userChoosenName,
           resolverAddr as string,
@@ -89,6 +91,7 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
           });
           setErro(`Registration failed: ${errorName}`);
         } else {
+          console.log("Error: ", err);
           // Handle chain mismatch errors specifically
           if (err.message.includes("chain") || err.message.includes("Chain")) {
             toast.error(
