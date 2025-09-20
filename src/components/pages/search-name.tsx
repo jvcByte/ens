@@ -21,7 +21,7 @@ export default function ENSSearch() {
     ...contracts.ENS,
     functionName: "nameRecords",
     args: [searchName],
-    // chainId: CHAIN_IDS.CELO_ALFAJORES,
+    chainId: CHAIN_IDS.CELO_ALFAJORES,
     query: {
       enabled: hasSearched && searchName.trim() !== "", // Only fetch when user searches
     },
