@@ -197,7 +197,7 @@ export default function HeroSection() {
                       className="bg-[#007707] hover:bg-[#009907]/90 text-white"
                     >
                       <Link
-                        to="/register"
+                        to="/register-name"
                         search={{ name: trimSpace(searchName) }}
                       >
                         Register Now

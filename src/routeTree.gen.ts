@@ -9,14 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
+import { Route as TransferNameRouteImport } from './routes/transfer-name'
+import { Route as RegisterNameRouteImport } from './routes/register-name'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const TransferNameRoute = TransferNameRouteImport.update({
+  id: '/transfer-name',
+  path: '/transfer-name',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterNameRoute = RegisterNameRouteImport.update({
+  id: '/register-name',
+  path: '/register-name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivitiesRoute = ActivitiesRouteImport.update({
@@ -39,43 +45,65 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/register': typeof RegisterRoute
+  '/register-name': typeof RegisterNameRoute
+  '/transfer-name': typeof TransferNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/register': typeof RegisterRoute
+  '/register-name': typeof RegisterNameRoute
+  '/transfer-name': typeof TransferNameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/activities': typeof ActivitiesRoute
-  '/register': typeof RegisterRoute
+  '/register-name': typeof RegisterNameRoute
+  '/transfer-name': typeof TransferNameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/activities' | '/register'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/activities'
+    | '/register-name'
+    | '/transfer-name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/activities' | '/register'
-  id: '__root__' | '/' | '/about' | '/activities' | '/register'
+  to: '/' | '/about' | '/activities' | '/register-name' | '/transfer-name'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/activities'
+    | '/register-name'
+    | '/transfer-name'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ActivitiesRoute: typeof ActivitiesRoute
-  RegisterRoute: typeof RegisterRoute
+  RegisterNameRoute: typeof RegisterNameRoute
+  TransferNameRoute: typeof TransferNameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
+    '/transfer-name': {
+      id: '/transfer-name'
+      path: '/transfer-name'
+      fullPath: '/transfer-name'
+      preLoaderRoute: typeof TransferNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register-name': {
+      id: '/register-name'
+      path: '/register-name'
+      fullPath: '/register-name'
+      preLoaderRoute: typeof RegisterNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activities': {
@@ -106,7 +134,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ActivitiesRoute: ActivitiesRoute,
-  RegisterRoute: RegisterRoute,
+  RegisterNameRoute: RegisterNameRoute,
+  TransferNameRoute: TransferNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,8 +6,8 @@ import { ThemeSwitcher } from "./theme-switcher";
 import { WalletConnectionButton } from "@/components/wallet/wallet-connection-button";
 const menuItems = [
   { name: "Activities", to: "/activities" },
+  { name: "Transfer Name", to: "/transfer-name" },
   { name: "Account Abstraction", to: "#link" },
-  // { name: "Register", to: "/register" },
 ];
 
 export const HeroHeader = () => {
