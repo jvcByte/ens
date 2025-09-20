@@ -35,7 +35,9 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
         await switchChainAsync({ chainId: CHAIN_IDS.CELO_ALFAJORES });
         console.log("Switched to Celo Alfajores!");
       } catch (err) {
-        toast.error(`Failed to switch network. ${err}`);
+        toast.error(`Failed to switch network. ${err}`, {
+          className: "toast-error",
+        });
         return;
       }
     }
@@ -62,12 +64,16 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
       const txHash = await walletClient.writeContract(request);
       setHash(txHash);
       setSuccess(`${userChoosenName} registered successfully!`);
-      toast.success(`${userChoosenName} registered successfully!`);
+      toast.success(`${userChoosenName} registered successfully!`, {
+        className: "toast-success",
+      });
     } catch (err) {
       console.error("Registration error:", err);
 
       if (err instanceof BaseError && err.message.includes("User rejected")) {
-        toast.error("Transaction cancelled by user");
+        toast.error("Transaction cancelled by user", {
+          className: "toast-error",
+        });
         setErro("Transaction was cancelled");
         return;
       }
@@ -78,13 +84,18 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
         );
         if (revertError instanceof ContractFunctionRevertedError) {
           const errorName = revertError.reason ?? "Unknown Error Occurred";
-          toast.error(`Registration failed: ${errorName}`);
+          toast.error(`Registration failed: ${errorName}`, {
+            className: "toast-error",
+          });
           setErro(`Registration failed: ${errorName}`);
         } else {
           // Handle chain mismatch errors specifically
           if (err.message.includes("chain") || err.message.includes("Chain")) {
             toast.error(
               "Chain mismatch error. Please ensure you're on Celo Alfajores network.",
+              {
+                className: "toast-success",
+              },
             );
             setErro(
               "Chain mismatch error. Please switch to Celo Alfajores network and try again.",
@@ -92,14 +103,18 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
           } else {
             const errorMessage =
               err.shortMessage || err.message || "Unknown error occurred";
-            toast.error(`Registration failed: ${errorMessage}`);
+            toast.error(`Registration failed: ${errorMessage}`, {
+              className: "toast-success",
+            });
             setErro(`Registration failed: ${errorMessage}`);
           }
         }
       } else {
         const errorMessage =
           err instanceof Error ? err.message : "Unknown error occurred";
-        toast.error(`Registration failed: ${errorMessage}`);
+        toast.error(`Registration failed: ${errorMessage}`, {
+          className: "toast-success",
+        });
         setErro(`Registration failed: ${errorMessage}`);
       }
     } finally {

@@ -78,7 +78,9 @@ export function WalletConnectionButton({
     if (address) {
       await navigator.clipboard.writeText(address);
       setCopied(true);
-      toast.success("Address copied!");
+      toast.success("Address copied!", {
+        className: "toast-success",
+      });
       setTimeout(() => setCopied(false), 2000);
     }
   };
@@ -90,13 +92,21 @@ export function WalletConnectionButton({
       setChainSwitchState({ isLoading: true, targetChainId: chainId });
 
       try {
-        toast.promise(switchChainAsync({ chainId }), {
-          loading: "Switching network...",
-          success: `Switched to ${chains.find((c) => c.id === chainId)?.name}`,
-          error: "Failed to switch network",
-        });
+        toast.promise(
+          switchChainAsync({ chainId }),
+          {
+            loading: "Switching network...",
+            success: `Switched to ${chains.find((c) => c.id === chainId)?.name}`,
+            error: "Failed to switch network",
+          },
+          {
+            className: "toast-loading",
+          },
+        );
       } catch (error) {
-        toast.error("Failed to switch network");
+        toast.error("Failed to switch network", {
+          className: "toast-error",
+        });
         console.error("Chain switch error:", error);
       } finally {
         setChainSwitchState({ isLoading: false });
