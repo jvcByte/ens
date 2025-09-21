@@ -23,7 +23,7 @@ export default function ENSSearch() {
     args: [searchName],
     chainId: CHAIN_IDS.CELO_ALFAJORES,
     query: {
-      enabled: hasSearched && searchName.trim() !== "", // Only fetch when user searches
+      enabled: false,
     },
   });
 
@@ -240,7 +240,7 @@ export default function ENSSearch() {
                           </span>
                           <p className="font-mono text-xs break-all mt-1 text-muted-foreground">
                             {data[1] !==
-                            "0x0000000000000000000000000000000000000000"
+                              "0x0000000000000000000000000000000000000000"
                               ? data[1]
                               : "Not set"}
                           </p>
