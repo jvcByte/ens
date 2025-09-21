@@ -1,5 +1,5 @@
 import { BaseError, ContractFunctionRevertedError } from "viem";
-import { walletClient, publicClient } from "@/lib/viem";
+import { publicClient, getWagmiWalletClient } from "@/lib/viem";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import contracts from "@/contracts/contracts";
 import { ExternalLink, Unplug } from "lucide-react";
 import toast from "react-hot-toast";
 import { celoAlfajores } from "viem/chains";
+// import { config } from "@/lib/config";
 
 type ENSRegisterProps = {
   name: string;
@@ -17,6 +18,7 @@ type ENSRegisterProps = {
 
 export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
   const { address, chainId } = useAccount();
+  // const { writeContract } = useWriteContract();
   const { switchChainAsync } = useSwitchChain();
   const [file, setFile] = useState<File | null>(null);
   const [erro, setErro] = useState<string | null>(null);
@@ -50,8 +52,18 @@ export function ENSRegister({ name: nametoReg }: ENSRegisterProps) {
     setHash(null);
 
     try {
+      const walletClient = await getWagmiWalletClient();
+      if (!walletClient) {
+        toast.error("No connected wallet found. Please connect your wallet.", {
+          className: "toast-error",
+        });
+        setErro("No connected wallet found.");
+        setIsPending(false);
+        return;
+      }
+
       const { request } = await publicClient.simulateContract({
-        account: address,
+        account: walletClient.account,
         address: contracts.ENS.address,
         abi: contracts.ENS.abi,
         functionName: "registerName",
