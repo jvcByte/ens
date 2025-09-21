@@ -1,5 +1,5 @@
 import { BaseError, ContractFunctionRevertedError } from "viem";
-import { walletClient, publicClient } from "@/lib/viem";
+import { publicClient, getWagmiWalletClient } from "@/lib/viem";
 import { useAccount, useSwitchChain } from "wagmi";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
@@ -42,8 +42,18 @@ export function ENSTransfer() {
     setHash(null);
 
     try {
+      const walletClient = await getWagmiWalletClient();
+      if (!walletClient) {
+        toast.error("No connected wallet found. Please connect your wallet.", {
+          className: "toast-error",
+        });
+        setErro("No connected wallet found.");
+        setIsPending(false);
+        return;
+      }
+
       const { request } = await publicClient.simulateContract({
-        account: address,
+        account: walletClient.account,
         address: contracts.ENS.address,
         abi: contracts.ENS.abi,
         functionName: "transferName",
