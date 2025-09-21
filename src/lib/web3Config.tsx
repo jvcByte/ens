@@ -1,14 +1,14 @@
 import { WagmiProvider } from "wagmi";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider } from "connectkit";
-import { config } from "./config";
+import { wagmiConfig } from "./wagmi";
 import { queryClient } from "./config";
 import { customeTheme } from "@/styles/connectkit-modal-theme";
 
 // Declare wagmi module for type safety
 declare module "wagmi" {
   interface Register {
-    config: typeof config;
+    config: typeof wagmiConfig;
   }
 }
 
@@ -18,7 +18,7 @@ type Web3ProviderProps = {
 
 export const Web3Provider = ({ children }: Web3ProviderProps) => {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider mode="auto" customTheme={customeTheme}>
           {children}

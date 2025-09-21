@@ -2,7 +2,7 @@
 import { celoAlfajores } from "viem/chains";
 import { createPublicClient, http } from "viem";
 import { getWalletClient } from "@wagmi/core";
-import { config } from "./config";
+import { wagmiConfig } from "./wagmi";
 
 export const publicClient = createPublicClient({
   chain: celoAlfajores,
@@ -13,8 +13,8 @@ export const publicClient = createPublicClient({
 // Returns null if no wallet is connected.
 export async function getWagmiWalletClient() {
   try {
-    const client = await getWalletClient(config);
-    return client ?? null;
+    const client = await getWalletClient(wagmiConfig);
+    return client ?? "No Client found :(";
   } catch {
     return null;
   }

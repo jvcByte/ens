@@ -15,7 +15,6 @@ if (!rootElement.innerHTML) {
           <RouterWrapper />
         </ThemeProvider>
       </Web3Provider>
-      ,
     </StrictMode>,
   );
 }
