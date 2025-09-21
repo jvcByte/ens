@@ -9,12 +9,11 @@ export const publicClient = createPublicClient({
   transport: http(),
 });
 
-// Obtain the connected wallet client from Wagmi's config at call time.
-// Returns null if no wallet is connected.
+// Returns the connected Wagmi Wallet Client or null if not available
 export async function getWagmiWalletClient() {
   try {
     const client = await getWalletClient(wagmiConfig);
-    return client ?? "No Client found :(";
+    return client ?? null;
   } catch {
     return null;
   }
